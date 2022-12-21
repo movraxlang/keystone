@@ -52,5 +52,12 @@ func (e *Engine) Assemble(code string) ([]byte, error) {
 		elem := C.get_elem_from_array(&encode, C.int(i))
 		bt[i] = byte(elem)
 	}
+
+	C.ks_free(encode)
+
 	return bt, nil
+}
+
+func (e *Engine) Close() {
+	C.ks_close(e.ks)
 }
