@@ -23,9 +23,9 @@ type Engine struct {
 	ks *C.ks_engine
 }
 
-func NewEngine(arch KSArch, mode KSMode) (*Engine, error) {
+func NewEngine() (*Engine, error) {
 	var ks *C.ks_engine
-	err := C.ks_open(C.ks_arch(C.int(arch)), C.int(mode), &ks)
+	err := C.ks_open(C.ks_arch(C.int(KS_ARCH_ARM64)), C.int(KS_MODE_LITTLE_ENDIAN), &ks)
 	if err != KS_ERR_OK {
 		return nil, errors.New("error creating engine")
 	}

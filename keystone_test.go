@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewEngine(t *testing.T) {
-	_, err := NewEngine(KS_ARCH_ARM, KS_MODE_ARM)
+	_, err := NewEngine()
 	if err != nil {
 		t.Fatalf("error creating engine: %v", err)
 	}
@@ -15,22 +15,16 @@ func TestNewEngine(t *testing.T) {
 func TestAssemble(t *testing.T) {
 	tests := []struct {
 		code string
-		arch KSArch
-		mode KSMode
 		want []string
 	}{
-		{"add eax, ecx", KS_ARCH_X86, KS_MODE_16,
+		{"mov x0, #0x0",
 			[]string{
-				"66", "01", "c8"},
-		},
-		{"sub r1, r2, r5", KS_ARCH_ARM, KS_MODE_ARM,
-			[]string{
-				"05", "10", "42", "e0"},
+				"00", "00", "80", "d2"},
 		},
 	}
 
 	for _, tt := range tests {
-		eng, err := NewEngine(tt.arch, tt.mode)
+		eng, err := NewEngine()
 		if err != nil {
 			t.Fatalf("%q creating engine: %v", tt.code, err)
 		}
